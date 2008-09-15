@@ -1,0 +1,42 @@
+********************************************************************************
+* FOSS4G2008 - Workshop
+********************************************************************************
+
+TITLE:
+----------------------
+FOSS4G routing with pgRouting tools and OpenStreetMap road data
+
+
+ABSTRACT:
+----------------------
+pgRouting adds routing functionality to PostGIS. This introductory workshop 
+will show you how. It gives a practical example of how to use pgRouting with 
+OpenStreetMap road network data. It explains the steps to prepare the network 
+data, make routing queries, assign costs to the network links and modify your 
+results through wrapper functions.
+
+INSTALLATION:
+----------------------
+ * Uncommpress VMware file: 
+
+
+INSTALLATION TEST:
+----------------------
+ * Start VMware Client
+ * Open pgRouting workshop Virtual Machine
+ * Power on virtual machine (create new UUID if asked for)
+ * Open Terminal Window
+ * Test internet connection: ping www.osgeo.org
+ * Test database connection: psql -U postgres -l
+ 
+
+MAPFISH TEST
+----------------------
+ * Start Firefox and load URL: http://localhost/foss4g08_routing/
+ * Open the "Routing" menu in to right panel
+ * Zoom to Cape Town
+ * In the Routing menu, click the little magnifying glass icon (Departure) and
+   then click the map to select the starting point.
+ * Do the same for the arrival.
+ * click "Show itinerary"
+ * The path between the two point appear on the map (blue line)

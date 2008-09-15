@@ -1,0 +1,52 @@
+********************************************************************************
+* FOSS4G2008 - Workshop
+********************************************************************************
+
+VM INFO:
+----------------------
+ - CPUs			: 1
+ - RAM			: 512 MB
+ - Networking 1	: Bridged
+ - Networking 1 : NAT
+ - Harddisk		: 3.5 GB SCSI (pre-allocated)
+ - VMware tools	: not installed
+
+OS INFO:
+----------------------
+ - OS			: Xubuntu 8.04 Desktop
+ - Installation	: Standard (uneccessary applications removed)
+ - Hostname		: foss4g
+ - Root password: not set (use sudo to execute commands as root)
+ - User login	: foss4g
+ - User password: foss4g
+ - Keyboard		: US-intl
+ - Date created	: 10-09-2008
+
+PGROUTING INSTALLATION:
+----------------------
+[http://pgrouting.postlbs.org/wiki/1.x/InstallationUbuntu804]
+
+PostgreSQL 8.3 
++ PostGIS 1.3.3-1 
++ pgRouting 1.03 with TSP and Driving Distance
++ pgAdminIII
+ - Login	: postgres
+ - Password	: none
+  
+MAPFISH INSTALLATION:
+----------------------
+[http://www.mapfish.org]
+
+
+SAMPLE DATA: 
+----------------------
+[http://www.openstreetmap.org]
+OpenStreetMap Greater Cape Town area 
+
+
+--
+Problems and feedback: 
+ - http://pgrouting.postlbs.org/discussion
+ - http://www.mapfish.org
+ 
+Keep informed on: http://pgrouting.postlbs.org
