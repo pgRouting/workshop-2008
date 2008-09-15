@@ -1,0 +1,83 @@
+= Installation on Ubuntu 8.04 (with PostgreSQL 8.3) with TSP and Driving Distance (Extras) =
+
+The workshop will use a virtual machine image running Xubuntu 8.04 with 
+preinstalled pgRouting. If you want to compile pgrouting yourself you can 
+proceed like we did for the workshop installation. 
+
+Help for installation on other platforms can be found here: 
+http://pgrouting.postlbs.org/wiki/pgRoutingDocs#Installation
+
+== 1. Install required packages ==
+{{{
+sudo apt-get install build-essential subversion cmake
+sudo apt-get install libboost-graph*
+sudo apt-get install postgresql-8.3-postgis postgresql-server-dev-8.3
+}}}
+
+For Driving Distance algorithm (optional)
+CGAL library can be easily installed using the Ubuntu multiverse repository.
+{{{
+sudo apt-get install libcgal*
+}}}
+
+For TSP algorithm (optional)
+{{{
+wget http://downloads.sourceforge.net/gaul/gaul-devel-0.1849-0.tar.gz?modtime=1114163427&big_mirror=0
+tar -xzf gaul-devel-0.1849-0.tar.gz
+cd gaul-devel-0.1849-0/
+./configure --disable-slang
+make
+sudo make install
+}}}
+
+== 2. Compile pgRouting core (with TSP and DD flag on) ==
+{{{
+svn checkout http://pgrouting.postlbs.org/svn/pgrouting/trunk pgrouting
+
+cd pgrouting/
+cmake -DWITH_TSP=ON -DWITH_DD=ON .
+make
+sudo make install
+}}}
+
+== 3. Setup PostgreSQL ==
+Set local database connections to "trust" in "pg_hba.conf" to be able to work 
+with PostgreSQL as user "postgres". Then restart PostgreSQL.
+{{{
+sudo gedit /etc/postgresql/8.3/main/pg_hba.conf 
+sudo /etc/init.d/postgresql-8.3 restart
+}}}
+
+== 4. Create routing database ==
+To test your installation create a first routing database and load the routing
+functions into this database.
+
+{{{
+createdb -U postgres routing
+createlang -U postgres plpgsql routing
+}}}
+
+Add PostGIS functions
+{{{
+psql -U postgres -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql routing
+psql -U postgres -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql routing
+}}}
+
+Add pgRouting functions
+{{{
+psql -U postgres -f /usr/share/postlbs/routing_core.sql routing
+psql -U postgres -f /usr/share/postlbs/routing_core_wrappers.sql routing
+psql -U postgres -f /usr/share/postlbs/routing_topology.sql routing
+}}}
+
+Add TSP functions (optional)
+{{{
+psql -U postgres -f /usr/share/postlbs/routing_tsp.sql routing
+psql -U postgres -f /usr/share/postlbs/routing_tsp_wrappers.sql routing
+}}}
+
+Add Driving Distance functions (optional)
+{{{
+psql -U postgres -f /usr/share/postlbs/routing_dd.sql routing
+psql -U postgres -f /usr/share/postlbs/routing_dd_wrappers.sql routing
+}}}
