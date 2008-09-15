@@ -1,11 +1,21 @@
 = Installation on Ubuntu 8.04 (with PostgreSQL 8.3) with TSP and Driving Distance (Extras) =
 
-The workshop will use a virtual machine image running Xubuntu 8.04 with 
-preinstalled pgRouting. If you want to compile pgrouting yourself you can 
-proceed like we did for the workshop installation. 
+To build pgRouting the following libraries are required:
+ * pgRouting source code (http://pgrouting.postlbs.org)
+ * C and C++ compilers
+ * PostgreSQL version >= 8.0
+ * PostGIS version >= 1.0
+ * The Boost Graph Library (BGL). Version >= 1.33 which contains the astar.hpp (http://www.boost.org/libs/graph/doc/index.html)
+ * For TSP (optional): The Genetic Algorithm Utility Library (GAUL) (http://gaul.sourceforge.net)
+ * For Driving Distance (optional): Computational Geometry Algorithms Library (CGAL) version >= 3.2 (http://www.cgal.org) 
 
-Help for installation on other platforms can be found here: 
-http://pgrouting.postlbs.org/wiki/pgRoutingDocs#Installation
+The workshop will use a virtual machine image running Xubuntu 8.04 with 
+preinstalled pgRouting. You can download the virtual machine image from 
+http://files.postlbs.org/foss4g2008/ 
+
+For installation instructions on other platforms take a look at the pgRouting 
+documentation pages: http://pgrouting.postlbs.org/wiki/pgRoutingDocs#Installation
+pgRouting on the workshops virtual machine image has been installed like this:
 
 == 1. Install required packages ==
 {{{
