@@ -1,0 +1,36 @@
+= FOSS4G routing with pgRouting tools and OpenStreetMap road data =
+
+=== Presenters: ===
+ * Claude Philipona ([http://www.camptocamp.com Camptocamp SA])
+ * Daniel Kastl ([http://www.orkney.co.jp Orkney, Inc.])
+
+=== Further authors: ===
+ * Frédéric Junod ([http://www.camptocamp.com Camptocamp SA])
+ * Anton Patrushev ([http://www.orkney.co.jp Orkney, Inc.])
+
+
+== Abstract ==
+
+pgRouting adds routing functionality to PostGIS. This introductory workshop 
+will show you how. It gives a practical example of how to use pgRouting with 
+OpenStreetMap road network data. It explains the steps to prepare the network 
+data, make routing queries, assign costs to the network links and modify your 
+results through wrapper functions.
+
+= Workplace access =
+
+ * Download the compressed VMware image and extract the file
+ * Start VM Player and load the workshop virtual machine
+ * If root access is required, use
+
+{{{
+username: foss4g
+password: foss4g
+}}}
+
+= Get the source =
+
+ * Checkout the latest workshop scripts and data from here:
+{{{
+svn checkout http://pgrouting.postlbs.org/svn/pgrouting/branches/workshop/FOSS4G2008/ workshop
+}}}
