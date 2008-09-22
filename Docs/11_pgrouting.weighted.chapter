@@ -69,7 +69,12 @@ When we comvert data from OSM format, we get these two tables for road types and
  305 |       3 | grade5             |   15  
 
 Road class is linked with ways table by class_id field.
-Cost values for classes table assign arbitrary. The idea is to specify a rate value to multiply it by length:
+Cost values for classes table assign arbitrary. 
+
+UPDATE classes SET cost=15 WHERE id>300;
+
+
+The idea is to specify a rate value to multiply it by length:
 
 
 SELECT * FROM shortest_path_shooting_star('SELECT gid as id, class_id, source, target, length*c.cost as cost, x1, y1, x2, y2, rule, to_cost, reverse_cost*c.cost as reverse_cost FROM ways w, classes c where class_id=c.id', 1955, 5787, true, true);
@@ -92,3 +97,6 @@ SELECT * FROM shortest_path_shooting_star('SELECT gid as id, class_id, source, t
 (69 rows)
 
 So, we can see that search result is completely differet from SHORTEST path search.
+
+We can also, for example, restrict roads of certain type:
+UPDATE classes SET cost=10000 WHERE name LIKE 'motorway%';
