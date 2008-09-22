@@ -1,6 +1,12 @@
+= Advanced usage of pgRouting shortest path search =
+
 An ordinary shortest path query result usualy looks like this:
 
-SELECT * FROM shortest_path_shooting_star('SELECT gid as id, source, target, length as cost, x1, y1, x2, y2, rule, to_cost, reverse_cost FROM ways', 1955, 5787, true, true);
+{{{
+SELECT * FROM shortest_path_shooting_star(
+	'SELECT gid as id, source, target, length as cost, x1, y1, x2, y2, rule, 
+	to_cost, reverse_cost FROM ways', 1955, 5787, true, true);
+	
  vertex_id | edge_id |        cost         
 -----------+---------+---------------------
       8134 |    1955 | 0.00952475464810279
@@ -15,21 +21,32 @@ SELECT * FROM shortest_path_shooting_star('SELECT gid as id, source, target, len
       5101 |     612 |  0.0906859882381495
       5102 |    5787 |    80089.8820919459
 (11 rows)
+}}}
 
-That is usualy called SHORTEST path, which means that a length of an edge is its cost.
+That is usually called SHORTEST path, which means that a length of an edge is 
+its cost.
 
-But in real life we have different limitations or preferences for different road types.
-In other words, we want to calculate CHEAPEST path - a path with a minimal cost, doesn't metter what cost means.
+== Costs can be anything ("Weighted costs") ==
 
-When we comvert data from OSM format, we get these two tables for road types and classes:
-                                                                                       
+But in real networks we have different limitations or preferences for different 
+road types for example. In other words, we want to calculate CHEAPEST path - a 
+path with a minimal cost. There is no limitation in what we take as costs.
+
+When we convert data from OSM format using the osm2pgrouting tool, we get these 
+two additional tables for road types and classes:
+{{{     
+\d classes
+                                                                        
   id |   name    
 -----+------------
    2 | cycleway
    1 | highway
    4 | junction
    3 | tracktype
+}}}
 
+{{{
+\d types
 
  id  | type_id |        name        |  cost 
 -----+---------+--------------------+--------
@@ -67,17 +84,24 @@ When we comvert data from OSM format, we get these two tables for road types and
  303 |       3 | grade3             |   15  
  304 |       3 | grade4             |   15  
  305 |       3 | grade5             |   15  
+}}}
 
-Road class is linked with ways table by class_id field.
-Cost values for classes table assign arbitrary. 
+Road class is linked with the ways table by class_id field. Cost values for 
+classes table are assigned arbitrary. 
 
+{{{
 UPDATE classes SET cost=15 WHERE id>300;
+}}}
 
+The idea behind these two tables is to specify a factor to be multiplied with 
+the cost of link (usually length):
 
-The idea is to specify a rate value to multiply it by length:
-
-
-SELECT * FROM shortest_path_shooting_star('SELECT gid as id, class_id, source, target, length*c.cost as cost, x1, y1, x2, y2, rule, to_cost, reverse_cost*c.cost as reverse_cost FROM ways w, classes c where class_id=c.id', 1955, 5787, true, true);
+{{{
+SELECT * FROM shortest_path_shooting_star(
+	'SELECT gid as id, class_id, source, target, length*c.cost as cost, 
+		x1, y1, x2, y2, rule, to_cost, reverse_cost*c.cost as reverse_cost 
+	FROM ways w, classes c 
+	WHERE class_id=c.id', 1955, 5787, true, true);
  vertex_id | edge_id |        cost         
 -----------+---------+---------------------
       8134 |    1955 | 0.00666732825367195
@@ -85,18 +109,21 @@ SELECT * FROM shortest_path_shooting_star('SELECT gid as id, class_id, source, t
       8137 |    1992 |   0.126646230936747
       5464 |     762 |   0.827868704808978
       5467 |     763 |    0.16765902528648
-      5470 |    2978 |   0.164681183696497
-         .
-         .
-         .
-     11005 |    3325 |   0.108724770203164
-      9788 |    2801 |   0.111846516578974
+       ... |     ... |                 ...
       9790 |    5785 | 0.00142107468268373
       8548 |    5786 | 0.00066608685984761
      16214 |    5787 |  0.0160179764183892
 (69 rows)
+}}}
 
-So, we can see that search result is completely differet from SHORTEST path search.
+We can see that the shortest path result is completely different from the 
+example before. We call this "weighted costs".
 
-We can also, for example, restrict roads of certain type:
-UPDATE classes SET cost=10000 WHERE name LIKE 'motorway%';
+Another example is to restrict access to roads of a certain type:
+{{{
+UPDATE classes SET cost=100000 WHERE name LIKE 'motorway%';
+}}}
+
+Through subqueries you can "mix" your costs as you like and this will change
+the results of your routing request immediately. Cost changes will affect the 
+next shortest path search, and there is no need to rebuild your network. 
