@@ -91,3 +91,5 @@ Add Driving Distance functions (optional)
 psql -U postgres -f /usr/share/postlbs/routing_dd.sql routing
 psql -U postgres -f /usr/share/postlbs/routing_dd_wrappers.sql routing
 }}}
+
+Now we can proceed to the next step to load the network data.
