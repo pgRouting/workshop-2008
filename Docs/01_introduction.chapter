@@ -36,3 +36,8 @@ password: foss4g
 {{{
 svn checkout http://pgrouting.postlbs.org/svn/pgrouting/branches/workshop/FOSS4G2008/ workshop
 }}}
+
+== Further informations ==
+
+ * pgRouting project website: http://pgrouting.postlbs.org
+ * MapFish project website: http://www.mapfish.org

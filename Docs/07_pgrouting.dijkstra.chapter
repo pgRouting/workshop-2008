@@ -1,4 +1,4 @@
-= pgrouting with Dijkstra algorithm =
+= pgRouting with Dijkstra algorithm =
 
 Dijkstra algorithm was the first algorithm implemented in pgRouting. 
 It doesn't require more attributes than source and target ID, and it can 
@@ -14,7 +14,7 @@ shortest_path( sql text,
 }}}
 
 Note: 
- * Source and target IDs are node IDs.
+ * Source and target IDs are vertex IDs.
  * Undirected graphs ("directed false") ignores "has_reverse_cost" setting
 
 
@@ -53,7 +53,7 @@ limitations, etc..
 
 === Wrapper WITHOUT bounding box ===
 
-Wrappers can change the format and ordering of the result and they often set 
+Wrappers can change the format and ordering of the result. They often set 
 default function parameters and make the usage of pgRouting more simple. 
 
 {{{
@@ -64,12 +64,12 @@ SELECT gid, AsText(the_geom) AS the_geom
 {{{
   gid   |                              the_geom      
 --------+---------------------------------------------------------------
-  293 | MULTILINESTRING((18.4074149 -33.9443308,18.4074019 -33.9443833))
- 4632 | MULTILINESTRING((18.4074149 -33.9443308,18.4077388 -33.9436183))
- 4633 | MULTILINESTRING((18.4077388 -33.9436183,18.4080293 -33.9429733))
-  ... | ...
-  762 | MULTILINESTRING((18.4241422 -33.9179275,18.4237423 -33.9182966))
-  761 | MULTILINESTRING((18.4243523 -33.9177154,18.4241422 -33.9179275))
+    293 | MULTILINESTRING((18.4074149 -33.9443308,18.4074019 -33.9443833))
+   4632 | MULTILINESTRING((18.4074149 -33.9443308,18.4077388 -33.9436183))
+   4633 | MULTILINESTRING((18.4077388 -33.9436183,18.4080293 -33.9429733))
+    ... | ...
+    762 | MULTILINESTRING((18.4241422 -33.9179275,18.4237423 -33.9182966))
+    761 | MULTILINESTRING((18.4243523 -33.9177154,18.4241422 -33.9179275))
 (62 rows)
 }}}
 
@@ -82,6 +82,15 @@ performance especially for large networks.
 SELECT gid, AsText(the_geom) AS the_geom 
 	FROM dijkstra_sp_delta('ways', 10, 20, 0.1);
 }}}
+  gid   |                              the_geom      
+--------+---------------------------------------------------------------
+    293 | MULTILINESTRING((18.4074149 -33.9443308,18.4074019 -33.9443833))
+   4632 | MULTILINESTRING((18.4074149 -33.9443308,18.4077388 -33.9436183))
+   4633 | MULTILINESTRING((18.4077388 -33.9436183,18.4080293 -33.9429733))
+    ... | ...
+    762 | MULTILINESTRING((18.4241422 -33.9179275,18.4237423 -33.9182966))
+    761 | MULTILINESTRING((18.4243523 -33.9177154,18.4241422 -33.9179275))
+(62 rows)
 
 Note: The projection of OSM data is "degree", so we set a bounding box 
-containing start and end vertex plus a 0.1 degree buffer.
+containing start and end vertex plus a 0.1 degree buffer for example.
