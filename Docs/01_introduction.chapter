@@ -17,20 +17,22 @@ OpenStreetMap road network data. It explains the steps to prepare the network
 data, make routing queries, assign costs to the network links and modify your 
 results through wrapper functions.
 
-= Workplace access =
+== Workplace Access ==
 
  * Download the compressed VMware image and extract the file
+{{{
+http://files.postlbs.org/foss4g2008/
+}}}
  * Start VM Player and load the workshop virtual machine
  * If root access is required, use
-
 {{{
 username: foss4g
 password: foss4g
 }}}
 
-= Get the source =
+== Get the Source ==
 
- * Checkout the latest workshop scripts and data from here:
+ * Checkout the latest workshop documentation, code samples and data from here:
 {{{
 svn checkout http://pgrouting.postlbs.org/svn/pgrouting/branches/workshop/FOSS4G2008/ workshop
 }}}
