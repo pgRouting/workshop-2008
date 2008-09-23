@@ -1,6 +1,6 @@
 = Advanced usage of pgRouting shortest path search =
 
-An ordinary shortest path query result usualy looks like this:
+An ordinary shortest path query with result usualy looks like this:
 
 {{{
 SELECT * FROM shortest_path_shooting_star(
@@ -94,7 +94,7 @@ UPDATE classes SET cost=15 WHERE id>300;
 }}}
 
 The idea behind these two tables is to specify a factor to be multiplied with 
-the cost of link (usually length):
+the cost of each link (usually length):
 
 {{{
 SELECT * FROM shortest_path_shooting_star(
