@@ -1,12 +1,23 @@
-OpenStreetMap uses a topological data structure.
+= About OpenStreetMap =
+
+"OpenStreetMap is a project aimed squarely at creating and providing free 
+geographic data such as street maps to anyone who wants them." 
+"The project was started because most maps you think of as free actually have 
+legal or technical restrictions on their use, holding back people from using 
+them in creative, productive or unexpected ways." 
+[Source: http://wiki.openstreetmap.org/index.php/Press]
+
+OpenStreetMap uses a topological data structure:
 
  * Nodes are points with a geographic position.
  * Ways are lists of nodes, representing a polyline or polygon.
  * Relations are groups of nodes, ways and other relations which can be assigned certain properties.
  * Tags can be applied to nodes, ways or relations and consist of name=value pairs.
  
-That's how nodes ways and relations are specified in a real OSM file:
-                
+This is how nodes, ways and relations are described in the OpenStreetmap XML
+file:
+
+{{{           
 <?xml version='1.0' encoding='UTF-8'?>
 <osm version='0.5' generator='JOSM'>
   ...
@@ -55,12 +66,20 @@ That's how nodes ways and relations are specified in a real OSM file:
   </relation>
   ...
 </osm>
+}}}
 
-The OSM file can be downloaded from OpenStreetMap website using an API (see http://wiki.openstreetmap.org/index.php/OSM_Protocol_Version_0.5),
-or with any software which supports OSM format, for example JOSM.
+The OSM data can be downloaded from OpenStreetMap website using an API 
+(see http://wiki.openstreetmap.org/index.php/OSM_Protocol_Version_0.5),
+or with some other OSM tools, for example JOSM editor.
 
-We take only nodes and ways of types and classes specified in mapconfig.xml file to be converted to pgRouting table format:
+Note: The API has a download size limitation, which can make it a bit
+inconvenient to download extensive areas with many features.
 
+When using the osm2pgrouting converter (see later), we take only nodes and ways 
+of types and classes specified in "mapconfig.xml" file to be converted to 
+pgRouting table format:
+
+{{{
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <type name="highway" id="1">
@@ -74,6 +93,11 @@ We take only nodes and ways of types and classes specified in mapconfig.xml file
     <class name="roundabout" id="401" />
   </type>  
 </configuration>  
+}}}
 
-Detailed description of all possible types and classes can be found here - http://wiki.openstreetmap.org/index.php/Map_features.
+Detailed description of all possible types and classes can be found here:
+http://wiki.openstreetmap.org/index.php/Map_features.
 
+For Cape Town the OpenStreetMap data is very comprehensive with many details.
+A compilation of the greater Cape Town area created with JOSM is available as
+capetown_20080829.osm.
