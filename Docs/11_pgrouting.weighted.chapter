@@ -93,6 +93,11 @@ classes table are assigned arbitrary.
 UPDATE classes SET cost=15 WHERE id>300;
 }}}
 
+For better performance it is worth to create an index on id field of classes table. 
+{{{
+CREATE INDEX class_idx ON ways (id);
+}}}
+
 The idea behind these two tables is to specify a factor to be multiplied with 
 the cost of each link (usually length):
 
